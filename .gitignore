@@ -1,0 +1,14 @@
+# package directories
+node_modules
+jspm_packages
+package-lock.json
+build/
+offline/
+
+# Serverless directories
+.serverless
+
+# don't commit env variables
+serverless.env.yml
+
+*.js

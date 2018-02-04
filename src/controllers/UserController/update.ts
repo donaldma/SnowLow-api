@@ -1,0 +1,52 @@
+'use strict'
+
+import dynamodb from '../../config/database'
+
+module.exports.update = (event, context, callback) => {
+  const timestamp = new Date().getTime()
+  const data = JSON.parse(event.body)
+
+  if (typeof data.text !== 'string' || typeof data.checked !== 'boolean') {
+    console.error('Validation Failed')
+    callback(null, {
+      statusCode: 400,
+      headers: { 'Content-Type': 'text/plain' },
+      body: 'Couldn\'t update the todo item.'
+    })
+    return
+  }
+
+  const params = {
+    TableName: process.env.USER_TABLE!,
+    Key: {
+      id: event.pathParameters.id
+    },
+    ExpressionAttributeNames: {
+      '#todo_text': 'text'
+    },
+    ExpressionAttributeValues: {
+      ':text': data.text,
+      ':checked': data.checked,
+      ':updatedAt': timestamp
+    },
+    UpdateExpression: 'SET #todo_text = :text, checked = :checked, updatedAt = :updatedAt',
+    ReturnValues: 'ALL_NEW'
+  }
+
+  dynamodb.update(params, (error, result) => {
+    if (error) {
+      console.error(error)
+      callback(null, {
+        statusCode: error.statusCode || 501,
+        headers: { 'Content-Type': 'text/plain' },
+        body: 'Couldn\'t update the todo item.'
+      })
+      return
+    }
+
+    const response = {
+      body: JSON.stringify(result.Attributes)
+    }
+    callback(null, response)
+  })
+}

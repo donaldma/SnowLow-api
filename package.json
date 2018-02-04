@@ -1,0 +1,35 @@
+{
+  "name": "snowlow-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run lint && rimraf build && tsc && sls offline start --skipCacheInvalidation",
+    "deploy": "npm run lint && rimraf build && tsc && sls deploy",
+    "lint": "tslint \"src/**/*.ts\" ",
+    "migrate": "sls dynamodb migrate"
+  },
+  "keywords": [],
+  "author": "Donald Ma",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "@types/dotenv": "^4.0.2",
+    "@types/mongoose": "^5.0.1",
+    "@types/node": "^9.4.0",
+    "@types/uuid": "^3.4.3",
+    "rimraf": "^2.6.2",
+    "serverless-offline": "^3.16.0",
+    "tslint": "^5.9.1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.188.0",
+    "dotenv": "^5.0.0",
+    "mongoose": "^5.0.3",
+    "node": "^9.5.0",
+    "serverless-dynamodb-local": "^0.2.27",
+    "typescript": "^2.7.1",
+    "uuid": "^3.2.1"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "extends": ["tslint:latest"],
+  "rules": {
+    "indent": [true, 2],
+    "no-unused-expression": true,
+    "no-shadowed-variable": true,
+    "semicolon": [true, "never"],
+    "quotemark": [ true, "single" ],
+    "triple-equals": [
+      true, "allow-undefined-check", "allow-null-check"
+    ],
+    "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
+    "no-trailing-whitespace": false,
+    "no-console": [false],
+    "one-line": [false],
+    "max-line-length": [false],
+    "only-arrow-functions": [false],
+    "whitespace": [
+      false
+    ],
+    "radix": false,
+    "object-literal-sort-keys": false,
+    "ordered-imports": [false],
+    "object-literal-shorthand": false,
+    "eofline": false,
+    "member-access": false,
+    "no-consecutive-blank-lines": [false],
+    "no-string-literal": false,
+    "arrow-parens": false,
+    "array-type": [false],
+    "object-literal-key-quotes": [false],
+    "max-classes-per-file": [false],
+    "no-empty": false,
+    "no-require-imports": false,
+    "no-var-requires": false
+  }
+}
