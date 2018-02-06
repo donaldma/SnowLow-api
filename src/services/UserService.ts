@@ -42,23 +42,20 @@ export default {
       return
     }
 
-    
+
     const salt = bcrypt.genSaltSync(10)
     const hashedPassword = bcrypt.hashSync(params.password, salt)
     const createRequest = {
-      TableName: params.tableName,
-      Item: {
-        id: params.id,
-        email: params.email,
-        password: hashedPassword,
-        name: params.name,
-        location: params.location,
-        createdAt: params.createdAt,
-        updatedAt: params.updatedAt
-      }
+      id: params.id,
+      email: params.email,
+      password: hashedPassword,
+      name: params.name,
+      location: params.location,
+      createdAt: params.createdAt,
+      updatedAt: params.updatedAt
     }
-        
-    const createdUser = await UserRepository.create(createRequest, callback)
+
+    const createdUser = await UserRepository.create(params.tableName, createRequest, callback)
 
     return createdUser
   }

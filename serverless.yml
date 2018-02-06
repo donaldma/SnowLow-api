@@ -12,7 +12,7 @@ custom:
       port: 8000
       inMemory: true
       migrate: true
-      noStart: true
+      # noStart: true
 
 provider:
   name: aws
@@ -41,14 +41,6 @@ functions:
     events:
       - http:
           path: user/register
-          method: post
-          cors: true
-          
-  create:
-    handler: /build/controllers/UserController.create
-    events:
-      - http:
-          path: user
           method: post
           cors: true
 
@@ -82,7 +74,7 @@ functions:
       - http:
           path: user/{id}
           method: delete
-          cors: true        
+          cors: true
 
   deleteAll:
     handler: /build/controllers/UserController.deleteAll
@@ -90,7 +82,7 @@ functions:
       - http:
           path: user
           method: delete
-          cors: true        
+          cors: true
 
 resources:
   Resources:

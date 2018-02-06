@@ -8,51 +8,6 @@ import RequestValidation from '../utilities/RequestValidation'
 import UserRepository from '../repositories/UserRepository'
 
 /**
- * Create a user
- */
-module.exports.create = (event, context, callback) => {
-  const timestamp = new Date()
-  const data = JSON.parse(event.body)
-  if (typeof data.text !== 'string') {
-    console.error('Validation Failed')
-    callback(null, {
-      statusCode: 400,
-      headers: { 'Content-Type': 'text/plain' },
-      body: 'Couldn\'t create the todo item.'
-    })
-    return
-  }
-  
-  const params = {
-    TableName: process.env.USER_TABLE!,
-    Item: {
-      id: uuid.v1(),
-      text: data.text,
-      checked: false,
-      createdAt: timestamp,
-      updatedAt: timestamp
-    }
-  }
-
-  dynamodb.put(params, (error) => {
-    if (error) {
-      console.error(error)
-      callback(null, {
-        statusCode: error.statusCode || 500,
-        headers: { 'Content-Type': 'text/plain' },
-        body: 'Couldn\'t create the todo item.'
-      })
-      return
-    }
-
-    const response = {
-      body: JSON.stringify(params.Item)
-    }
-    callback(null, response)
-  })
-}
-
-/**
  * Register a new user
  */
 module.exports.register = async (event, context, callback) => {
@@ -69,8 +24,8 @@ module.exports.register = async (event, context, callback) => {
     })
     return
   }
-  
-  const params = {
+
+  const request = {
     tableName: process.env.USER_TABLE!,
     id: uuid.v4(),
     email: data.email,
@@ -81,21 +36,14 @@ module.exports.register = async (event, context, callback) => {
     updatedAt: new Date().toISOString()
   }
 
-  await UserService.registerEmail(params, callback)
+  await UserService.registerEmail(request, callback)
 }
 
 /**
  * Get a user by id
  */
 module.exports.get = async (event, context, callback) => {
-  const params = {
-    TableName: process.env.USER_TABLE!,
-    Key: {
-      id: event.pathParameters.id
-    }
-  }
-
-  await UserRepository.findById(params, callback)
+  await UserRepository.findById(process.env.USER_TABLE!, event.pathParameters.id, callback)
 }
 
 /**
@@ -222,7 +170,7 @@ module.exports.deleteAll = async (event, context, callback) => {
         id: user.id
       }
     }
-  
+
     dynamodb.delete(params, (error) => {
       if (error) {
         console.error(error)
@@ -233,13 +181,13 @@ module.exports.deleteAll = async (event, context, callback) => {
         })
         return
       }
-  
+
       const response = {
         body: JSON.stringify(`${users!.length} users deleted`)
       }
       callback(null, response)
     })
   })
-  
+
 
 }

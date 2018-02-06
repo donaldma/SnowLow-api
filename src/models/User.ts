@@ -6,12 +6,9 @@ export interface ICreateUserRequest {
 }
 
 export interface ICreateUserParams {
-  TableName: string
-  Item: {
-    id: string
-    email: string
-    password: string
-    name: string
-    location: string
-  }
+  id: string
+  email: string
+  password: string
+  name: string
+  location: string
 }
