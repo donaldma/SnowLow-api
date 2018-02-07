@@ -171,12 +171,18 @@ module.exports.deleteAll = async (event, context, callback) => {
       }
     }
 
+    const headers = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+      'Content-Type': 'text/plain'
+    }
+
     dynamodb.delete(params, (error) => {
       if (error) {
         console.error(error)
         callback(null, {
           statusCode: error.statusCode || 501,
-          headers: { 'Content-Type': 'text/plain' },
+          headers: headers,
           body: 'Couldn\'t remove users.'
         })
         return
