@@ -42,13 +42,14 @@ functions:
           method: post
           cors: true
 
-  list:
+  getAll:
     handler: /build/controllers/UserController.getAll
     events:
       - http:
           path: user
           method: get
           cors: true
+          authorizer: aws_iam
 
   get:
     handler: /build/controllers/UserController.get
@@ -57,6 +58,7 @@ functions:
           path: user/{id}
           method: get
           cors: true
+          authorizer: aws_iam
 
   update:
     handler: /build/controllers/UserController.update
@@ -65,7 +67,7 @@ functions:
           path: user/{id}
           method: put
           cors: true
-
+          authorizer: aws_iam
   delete:
     handler: /build/controllers/UserController.delete
     events:
@@ -73,6 +75,7 @@ functions:
           path: user/{id}
           method: delete
           cors: true
+          authorizer: aws_iam
 
   deleteAll:
     handler: /build/controllers/UserController.deleteAll

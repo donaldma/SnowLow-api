@@ -2,6 +2,7 @@ import dynamodb from '../config/database'
 import * as createError from 'http-errors'
 import { ICreateUserParams } from '../models/User'
 import dynamodbClient from '../aws/DynamodbClient'
+import { failure, success } from '../aws/DynamodbResponse'
 
 export default {
 
@@ -21,8 +22,37 @@ export default {
     return dynamodbPromise.Items
   },
 
-  findById: function(table: string, id: string, callback: any) {
-    dynamodbClient.get(table, id, callback)
+  findById: async function(table: string, event: any, callback: any) {
+    const params = {
+      TableName: table,
+      Key: {
+        id: event.pathParameters.id
+      }
+    }
+
+    try {
+      const result = await dynamodbClient.call('get', params)
+      if (result.Item) {
+        callback(null, success(result.Item))
+      } else {
+        callback(null, failure({ status: false, error: 'User not found.' }))
+      }
+    } catch (e) {
+      callback(null, failure({ status: false }))
+    }
+  },
+
+  findAll: async function(table: string, event: any, callback: any) {
+    const params = {
+      TableName: process.env.USER_TABLE!
+    }
+
+    try {
+      const result = await dynamodbClient.call('scan', params)
+      callback(null, success(result.Items))
+    } catch (e) {
+      callback(null, failure({ status: false }))
+    }
   }
 
 }

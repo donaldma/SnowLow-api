@@ -3,6 +3,10 @@ import { ICreateUserParams } from '../models/User'
 
 export class DynamodbClient {
 
+  call(action, params) {
+    return dynamodb[action](params).promise()
+  }
+
   get(table: string, id: string, callback: any) {
     const params = {
       TableName: table,

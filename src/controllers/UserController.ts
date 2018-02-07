@@ -43,39 +43,22 @@ module.exports.register = async (event, context, callback) => {
  * Get a user by id
  */
 module.exports.get = async (event, context, callback) => {
-  await UserRepository.findById(process.env.USER_TABLE!, event.pathParameters.id, callback)
+  await UserRepository.findById(process.env.USER_TABLE!, event, callback)
 }
 
 /**
  * Get all users
  */
-module.exports.getAll = (event, context, callback) => {
-  const params = {
-    TableName: process.env.USER_TABLE!
-  }
-
-  dynamodb.scan(params, (error, result) => {
-    if (error) {
-      console.error(error)
-      callback(null, {
-        statusCode: error.statusCode || 501,
-        headers: { 'Content-Type': 'text/plain' },
-        body: 'Couldn\'t fetch the todo item.'
-      })
-      return
-    }
-
-    const response = {
-      body: JSON.stringify(result.Items)
-    }
-    callback(null, response)
-  })
+module.exports.getAll = async (event, context, callback) => {
+  await UserRepository.findAll(process.env.USER_TABLE!, event, callback)
 }
 
 /**
  * Update a user by id
  */
-module.exports.update = (event, context, callback) => {
+module.exports.update = async (event, context, callback) => {
+  await UserRepository.update(process.env.USER_TABLE!, event, callback)
+
   const timestamp = new Date().getTime()
   const data = JSON.parse(event.body)
 
