@@ -4,23 +4,6 @@ import UserRepository from '../repositories/UserRepository'
 
 export default {
 
-  // login: async function (email: string, password: string) {
-  //   const user = await UserRepository.findByEmail(email)
-  //   if (!user) {
-  //     throw createError(401, 'Incorrect email or password')
-  //   } else if (!user.password) {
-  //     throw createError(401, 'This account was created via Facebook. Please log in with your original account creation method')
-  //   } else if (!bcrypt.compareSync(password, user.password)) {
-  //     throw createError(401, 'Incorrect email or password')
-  //   } else {
-  //     const authToken = await AuthTokenService.add(user.id)
-  //     return {
-  //       user: user.completeJSON(),
-  //       token: authToken
-  //     }
-  //   }
-  // },
-
   registerEmail: async function(params: any, event: any, callback: any) {
     try {
       const users = await UserRepository.findAll(params.tableName, event, callback, true)
