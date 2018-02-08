@@ -1,7 +1,6 @@
 import * as bcrypt from 'bcrypt'
 import * as createError from 'http-errors'
 import UserRepository from '../repositories/UserRepository'
-// import { AuthTokenService } from './AuthTokenService'
 
 export default {
 
@@ -22,12 +21,9 @@ export default {
   //   }
   // },
 
-  registerEmail: async function(params: any, callback: any) {
-    const getParams = {
-      TableName: params.tableName
-    }
+  registerEmail: async function(params: any, event: any, callback: any) {
     try {
-      const users = await UserRepository.findAllUsers(getParams)
+      const users = await UserRepository.findAll(params.tableName, event, callback, true)
       users!.forEach(user => {
         if(user.email === params.email) {
           throw createError(409)
