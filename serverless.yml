@@ -44,6 +44,14 @@ functions:
           method: post
           cors: true
 
+  search:
+    handler: /build/controllers/SearchController.search
+    events:
+      - http:
+          path: search/{searchTerm}
+          method: get
+          cors: true
+
   getAll:
     handler: /build/controllers/UserController.getAll
     events:
