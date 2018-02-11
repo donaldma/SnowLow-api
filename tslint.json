@@ -5,7 +5,7 @@
     "no-unused-expression": true,
     "no-shadowed-variable": true,
     "semicolon": [true, "never"],
-    "quotemark": [ true, "single" ],
+    "quotemark": false,
     "triple-equals": [
       true, "allow-undefined-check", "allow-null-check"
     ],

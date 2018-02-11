@@ -30,22 +30,14 @@ provider:
       - dynamodb:PutItem
       - dynamodb:UpdateItem
       - dynamodb:DeleteItem
-    Resource: 
+    Resource:
       - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.USER_TABLE}"
       - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.SEARCH_HISTORY_TABLE}"
 
 functions:
 
-  register:
-    handler: /build/controllers/UserController.register
-    events:
-      - http:
-          path: user/register
-          method: post
-          cors: true
-
   search:
-    handler: /build/controllers/SearchController.search
+    handler: build/controllers/SearchController.search
     events:
       - http:
           path: search/{searchTerm}
@@ -53,45 +45,19 @@ functions:
           cors: true
 
   getAll:
-    handler: /build/controllers/UserController.getAll
+    handler: /build/controllers/SearchController.getAll
     events:
       - http:
-          path: user
+          path: search/admin/history
           method: get
-          cors: true
-          authorizer: aws_iam
-
-  get:
-    handler: /build/controllers/UserController.get
-    events:
-      - http:
-          path: user/{id}
-          method: get
-          cors: true
-          authorizer: aws_iam
-
-  update:
-    handler: /build/controllers/UserController.update
-    events:
-      - http:
-          path: user/{id}
-          method: put
-          cors: true
-          authorizer: aws_iam
-  delete:
-    handler: /build/controllers/UserController.delete
-    events:
-      - http:
-          path: user/{id}
-          method: delete
           cors: true
           authorizer: aws_iam
 
   deleteAll:
-    handler: /build/controllers/UserController.deleteAll
+    handler: build/controllers/SearchController.clearData
     events:
       - http:
-          path: user
+          path: search/admin/history
           method: delete
           cors: true
           authorizer: aws_iam

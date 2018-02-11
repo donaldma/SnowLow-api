@@ -1,46 +1,25 @@
 'use strict'
 
-import UserRepository from '../repositories/UserRepository'
 import SearchService from '../services/SearchService'
+import SearchRepository from '../repositories/SearchRepository'
 
 /**
  * Search based on search term
  */
 module.exports.search = async (event, context, callback) => {
-  await SearchService.scrapeBySearchTerm(event.pathParameters.searchTerm, process.env.USER_TABLE!, event, callback)
+  await SearchService.scrapeBySearchTerm(event.pathParameters, process.env.SEARCH_HISTORY_TABLE!, event, callback)
 }
 
 /**
- * Get a user by id
+ * Clear search history
  */
-module.exports.get = async (event, context, callback) => {
-  await UserRepository.findById(process.env.USER_TABLE!, event, callback)
+module.exports.clearData = async (event, context, callback) => {
+  await SearchRepository.clearData(process.env.SEARCH_HISTORY_TABLE!, event, callback)
 }
 
 /**
- * Get all users
+ * Get search history
  */
 module.exports.getAll = async (event, context, callback) => {
-  await UserRepository.findAll(process.env.USER_TABLE!, event, callback, false)
-}
-
-/**
- * Update a user by id
- */
-module.exports.update = async (event, context, callback) => {
-  await UserRepository.update(process.env.USER_TABLE!, event, callback)
-}
-
-/**
- * Delete a user by id
- */
-module.exports.delete = async (event, context, callback) => {
-  await UserRepository.delete(process.env.USER_TABLE!, event, callback)
-}
-
-/**
- * Delete all
- */
-module.exports.deleteAll = async (event, context, callback) => {
-  await UserRepository.deleteAll(process.env.USER_TABLE!, event, callback)
+  await SearchRepository.findAll(process.env.SEARCH_HISTORY_TABLE!, event, callback, false)
 }
