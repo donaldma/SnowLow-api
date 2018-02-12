@@ -6,6 +6,10 @@ export function failure(body) {
   return buildResponse(500, body)
 }
 
+export function NotAuthorized(body) {
+  return buildResponse(401, body)
+}
+
 function buildResponse(statusCode, body) {
   return {
     statusCode: statusCode,

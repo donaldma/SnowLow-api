@@ -8,7 +8,7 @@ offline/
 # Serverless directories
 .serverless
 
-# don't commit env variables
-serverless.env.yml
+# don't commit secrets
+secrets.yml
 
 *.js

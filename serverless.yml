@@ -1,4 +1,7 @@
 service: snowlow
+package:
+  exclude:
+    - secrets.yml
 
 frameworkVersion: ">=1.1.0 <2.0.0"
 
@@ -13,14 +16,15 @@ custom:
       inMemory: true
       migrate: true
       noStart: true
+  secrets: ${file(secrets.yml)}
 
 provider:
   name: aws
   runtime: nodejs6.10
   environment:
-    JWT_SECRET: snowlowsuprtsecretssh
     USER_TABLE: ${self:service}-user
     SEARCH_HISTORY_TABLE: ${self:service}-searchHistory
+    ADMIN_COG_ID: "${self:custom.secrets.ADMIN_COG_ID}"
   iamRoleStatements:
   - Effect: Allow
     Action:
