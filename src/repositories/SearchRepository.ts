@@ -38,7 +38,7 @@ export default {
         Item: {
           id: uuid.v4(),
           userId: event.requestContext.identity.cognitoIdentityId && event.requestContext.identity.cognitoIdentityId !== 'offlineContext_cognitoIdentityId' ? event.requestContext.identity.cognitoIdentityId : -1,
-          searchTerm: result.searchTerm,
+          searchPath: result.searchPath,
           name: result.name,
           price: PriceHelper.getPriceAsFloatNumber(result.price.toString()),
           itemUrl: result.itemUrl,

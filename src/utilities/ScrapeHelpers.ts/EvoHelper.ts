@@ -6,8 +6,7 @@ const request = require('request-promise')
 
 export default {
 
-  evoScrape: async function(category: string, keyword: string, evoSearchUrl: string, searchTerm: string, table: string, event: any, callback: any): Promise<any> {
-    const errorMessage = event.queryStringParameters.gender ? `Sorry we couldn't find anything for ${keyword} with filter ${event.queryStringParameters.gender}` : `Sorry we couldn't find anything for ${keyword}`
+  evoScrape: async function(category: string, keyword: string, evoSearchUrl: string, searchTerm: string, genderPath: string, table: string, event: any, callback: any): Promise<any> {
     const results = [] as object[]
 
     await request(evoSearchUrl, (error, response, html) => {
@@ -16,8 +15,7 @@ export default {
 
         // Handle no results
         if($('.results-header-none').length) {
-          callback(null, failure({ status: 500, error: errorMessage }))
-          return
+          return results
         }
 
         $('span.product-thumb-title').each((index, element) => {
@@ -44,7 +42,7 @@ export default {
           results[index]['price'] = PriceHelper.getPriceAsFloatNumber(price)
           results[index]['itemUrl'] = evoSearchUrl + itemUrl
           results[index]['imageUrl'] = imageUrl
-          results[index]['searchTerm'] = searchTerm
+          results[index]['searchPath'] = searchTerm + genderPath
         })
       } else {
         callback(null, failure({ status: false, error: 'Error in request connection' }))
