@@ -6,8 +6,22 @@ const request = require('request-promise')
 
 export default {
 
-  evoScrape: async function(category: string, keyword: string, evoSearchUrl: string, searchTerm: string, genderPath: string, table: string, event: any, callback: any): Promise<any> {
+  evoScrape: async function(searchTerm: string, genderPath: string, table: string, event: any, callback: any): Promise<any> {
     const results = [] as object[]
+
+    const searchTermSplit = searchTerm.toLowerCase().split('-')
+
+    const evoSearchCategory = searchTermSplit[0]
+    let evoSearchKeyword
+    if(searchTermSplit[3]) {
+      evoSearchKeyword = `${searchTermSplit[1]}-${searchTermSplit[2]}-${searchTermSplit[3]}`
+    } else if(searchTermSplit[2]) {
+      evoSearchKeyword = `${searchTermSplit[1]}-${searchTermSplit[2]}`
+    } else {
+      evoSearchKeyword = searchTermSplit[1]
+    }
+
+    const evoSearchUrl = `https://www.evo.com/shop/sale/${evoSearchCategory}/${evoSearchKeyword}${genderPath}/s_average-rating-desc/rpp_200`
 
     await request(evoSearchUrl, (error, response, html) => {
       if (!error) {

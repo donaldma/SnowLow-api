@@ -9,17 +9,6 @@ export default {
 
   scrapeBySearchTerm: async function(pathParams: any, table: string, event: any, callback: any) {
     const genderPath = event.queryStringParameters && 'gender' in event.queryStringParameters ? `/${event.queryStringParameters.gender}` : ''
-    const searchTermSplit = pathParams.searchTerm.toLowerCase().split('-')
-    const evoSearchCategory = searchTermSplit[0]
-
-    let evoSearchKeyword
-    if(searchTermSplit[3]) {
-      evoSearchKeyword = `${searchTermSplit[1]}-${searchTermSplit[2]}-${searchTermSplit[3]}`
-    } else if(searchTermSplit[2]) {
-      evoSearchKeyword = `${searchTermSplit[1]}-${searchTermSplit[2]}`
-    } else {
-      evoSearchKeyword = searchTermSplit[1]
-    }
 
     const resultsFromDb: IDatabaseResults[] = []
     const resultsFromScrape = [] as object[]
@@ -42,8 +31,7 @@ export default {
     }
 
     // First scrape target: https://www.evo.com/shop/sale/{category}/{item}/{gender}/s_average-rating-desc/rpp_200
-    const evoSearchUrl = `https://www.evo.com/shop/sale/${evoSearchCategory}/${evoSearchKeyword}${genderPath}/s_average-rating-desc/rpp_200`
-    const evoResults = await EvoHelper.evoScrape(evoSearchCategory, evoSearchKeyword, evoSearchUrl, pathParams.searchTerm, genderPath, table, event, callback)
+    const evoResults = await EvoHelper.evoScrape(pathParams.searchTerm, genderPath, table, event, callback)
     resultsFromScrape.push(...evoResults)
 
     if(resultsFromScrape.length === 0) {
