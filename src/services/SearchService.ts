@@ -35,7 +35,7 @@ export default {
     resultsFromScrape.push(...evoResults)
 
     if(resultsFromScrape.length === 0) {
-      callback(null, failure({ status: 500, error: `${resultsFromScrape.length} results` }))
+      callback(null, failure({ status: false, error: `${resultsFromScrape.length} results` }))
       return
     }
 
