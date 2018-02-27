@@ -54,7 +54,7 @@ export default {
           results[index] = {}
           results[index]['name'] = name
           results[index]['price'] = PriceHelper.getPriceAsFloatNumber(price)
-          results[index]['itemUrl'] = evoSearchUrl + itemUrl
+          results[index]['itemUrl'] = 'https://www.evo.com' + itemUrl
           results[index]['imageUrl'] = imageUrl
           results[index]['searchPath'] = searchTerm + genderPath
         })
