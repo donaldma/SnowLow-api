@@ -32,7 +32,7 @@ module.exports.clearData = async (event, context, callback) => {
  */
 module.exports.getAll = async (event: any, context, callback) => {
   const { requestContext } = event
-
+  console.log('requestContext.identity.cognitoIdentityId', requestContext.identity.cognitoIdentityId)
   if(requestContext && requestContext.stage !== 'dev') {
     if(requestContext.identity.cognitoIdentityId !== process.env.ADMIN_COG_ID) {
       callback(null, NotAuthorized({ status: false, error: 'You are not an admin' }))
