@@ -12,7 +12,7 @@ plugins:
 custom:
   dynamodb:
     start:
-      port: 8000
+      port: 3001
       inMemory: true
       migrate: true
       noStart: true
@@ -25,6 +25,8 @@ provider:
     USER_TABLE: ${self:service}-user
     SEARCH_HISTORY_TABLE: ${self:service}-searchHistory
     ADMIN_COG_ID: "${self:custom.secrets.ADMIN_COG_ID}"
+    TWILIO_SID: "${self:custom.secrets.TWILIO_SID}"
+    TWILIO_TOKEN: "${self:custom.secrets.TWILIO_TOKEN}"
   iamRoleStatements:
   - Effect: Allow
     Action:
@@ -45,6 +47,14 @@ functions:
     events:
       - http:
           path: search/{searchTerm}
+          method: get
+          cors: true
+
+  bot:
+    handler: build/controllers/BotController.run
+    events:
+      - http:
+          path: bot
           method: get
           cors: true
 
