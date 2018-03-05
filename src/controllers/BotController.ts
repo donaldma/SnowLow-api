@@ -6,5 +6,5 @@ import BotService from '../services/BotService'
  * Search based on search term
  */
 module.exports.run = async (event, context, callback) => {
-  await BotService.checkTickets(callback)
+  await BotService.checkTickets(event.pathParameters, callback)
 }

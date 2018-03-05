@@ -54,7 +54,7 @@ functions:
     handler: build/controllers/BotController.run
     events:
       - http:
-          path: bot
+          path: bot/movie/{movieTitle}
           method: get
           cors: true
 
