@@ -4,13 +4,23 @@ export enum Currency{
 }
 
 export interface IDatabaseResults {
-  createdAt: string
-  searchTerm: string
-  price: number
   imageUrl: string
-  name: string
   currency: Currency
-  id: string
   userId: string
+  searchPath: string
   itemUrl: string
+  createdAt: string
+  price: number
+  id: string
+  name: string
+}
+
+export interface IScrapeResults {
+  name: string
+  price: number
+  itemUrl: string
+  imageUrl: string
+  searchPath: string
+  currency: Currency
+  userId: string
 }

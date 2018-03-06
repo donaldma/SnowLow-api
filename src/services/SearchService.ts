@@ -39,6 +39,8 @@ export default {
       return
     }
 
+    console.log(event.requestContext.identity.sourceIp)
+
     await SearchRepository.addSearchResults(resultsFromScrape, table, event, callback)
     callback(null, success({ status: 200, fromDb: false, results: resultsFromScrape }))
   }

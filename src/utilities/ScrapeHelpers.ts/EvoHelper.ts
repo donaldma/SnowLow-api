@@ -1,5 +1,6 @@
 import PriceHelper from '../../utilities/PriceHelper'
 import { failure } from '../../aws/DynamodbResponse'
+import { Currency } from '../../models/Search'
 
 const cheerio = require('cheerio')
 const request = require('request-promise')
@@ -57,6 +58,8 @@ export default {
           results[index]['itemUrl'] = 'https://www.evo.com' + itemUrl
           results[index]['imageUrl'] = imageUrl
           results[index]['searchPath'] = searchTerm + genderPath
+          results[index]['currency'] = Currency.USD
+          results[index]['userId'] = event.requestContext.identity.cognitoIdentityId && event.requestContext.identity.cognitoIdentityId !== 'offlineContext_cognitoIdentityId' ? event.requestContext.identity.cognitoIdentityId : -1
         })
       } else {
         callback(null, failure({ status: false, error: 'Error in request connection' }))
