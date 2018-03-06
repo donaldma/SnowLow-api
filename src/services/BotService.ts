@@ -23,7 +23,7 @@ export default {
 
         numbersToNotify.forEach(num => {
           client.messages.create({
-              body: 'Tickets for infinity war now available at https://www.cineplex.com/Movie/avengers-infinity-war',
+              body: `Tickets for infinity war now available at https://www.cineplex.com/Movie/${pathParams.movieTitle}`,
               to: num,
               from: '7784000527'
           })
