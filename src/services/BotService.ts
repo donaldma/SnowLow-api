@@ -14,14 +14,14 @@ export default {
       if (!error) {
         const $ = cheerio.load(html)
         const ticketText = $('div.md-qt-widget-container').children().children().text()
-        const numbers = ['7788653098']
+        const numbersToNotify = ['7788653098', '7789529922']
 
         if(ticketText === 'Tickets for this movie are not available at this moment') {
           console.log('not available')
           return
         }
 
-        numbers.forEach(num => {
+        numbersToNotify.forEach(num => {
           client.messages.create({
               body: 'Tickets for infinity war now available at https://www.cineplex.com/Movie/avengers-infinity-war',
               to: num,
