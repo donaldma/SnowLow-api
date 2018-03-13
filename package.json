@@ -36,6 +36,7 @@
     "http-errors": "^1.6.2",
     "lodash": "^4.17.5",
     "moment": "^2.20.1",
+    "moment-timezone": "^0.5.14",
     "node": "^9.5.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",

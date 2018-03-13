@@ -15,7 +15,7 @@ custom:
       port: 3001
       inMemory: true
       migrate: true
-      noStart: true
+      # noStart: true
   secrets: ${file(secrets.yml)}
 
 provider:
@@ -50,11 +50,19 @@ functions:
           method: get
           cors: true
 
-  bot:
-    handler: build/controllers/BotController.run
+  movieBot:
+    handler: build/controllers/BotController.movieBot
     events:
       - http:
           path: bot/movie/{movieTitle}
+          method: get
+          cors: true
+
+  pcPriceBot:
+    handler: build/controllers/BotController.pcPriceBot
+    events:
+      - http:
+          path: bot/pcparts/{listId}
           method: get
           cors: true
 

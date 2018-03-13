@@ -1,3 +1,4 @@
+import * as moment from 'moment-timezone'
 import { success, failure } from '../aws/DynamodbResponse'
 const cheerio = require('cheerio')
 const request = require('request-promise')
@@ -29,6 +30,36 @@ export default {
           })
         })
         console.log('available')
+      } else {
+        callback(null, failure({ status: false, error: 'Error in request connection' }))
+      }
+    })
+    callback(null, success({ status: true }))
+  },
+
+  checkPrice: async function(pathParams: any, callback: any) {
+    const url = `https://ca.pcpartpicker.com/list/${pathParams.listId}`
+
+    await request(url, (error, response, html) => {
+      if (!error) {
+        const $ = cheerio.load(html)
+        const totalPrice: string[] = []
+
+        $('tr.total-price').each((index, element) => {
+          const data = $(element)
+          totalPrice.push(data.children().text().substring(6))
+        })
+        const numbersToNotify = ['7788653098']
+        const currentMoment = moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
+
+        numbersToNotify.forEach(num => {
+          client.messages.create({
+              body: `Your pcpartpicker build ${url} is ${totalPrice} today.`,
+              to: num,
+              from: '7784000527'
+          })
+        })
+        console.log(`Price on ${currentMoment}: ${totalPrice[0]}`)
       } else {
         callback(null, failure({ status: false, error: 'Error in request connection' }))
       }

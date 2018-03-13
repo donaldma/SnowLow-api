@@ -2,9 +2,10 @@
 
 import BotService from '../services/BotService'
 
-/**
- * Search based on search term
- */
-module.exports.run = async (event, context, callback) => {
+module.exports.movieBot = async (event, context, callback) => {
   await BotService.checkTickets(event.pathParameters, callback)
+}
+
+module.exports.pcPriceBot = async (event, context, callback) => {
+  await BotService.checkPrice(event.pathParameters, callback)
 }
