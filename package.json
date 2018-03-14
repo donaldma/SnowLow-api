@@ -5,9 +5,10 @@
   "main": "handler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run lint && rimraf build && tsc && sls offline start --skipCacheInvalidation --port 3001",
-    "deploy:dev": "npm i && npm run lint && rimraf build && tsc && sls deploy -s dev",
-    "deploy": "npm i && npm run lint && rimraf build && tsc && sls deploy -s prod",
+    "build": "rimraf build && tsc",
+    "start": "npm run lint && npm run build && sls offline start --skipCacheInvalidation --port 3001",
+    "deploy:dev": "npm i && npm run lint && npm run build && sls deploy -s dev",
+    "deploy": "npm i && npm run lint && npm run build && sls deploy -s prod",
     "lint": "tslint \"src/**/*.ts\" ",
     "migrate": "sls dynamodb migrate"
   },

@@ -1,0 +1,11 @@
+language: node_js
+node_js: 8.1.4
+notifications:
+  slack:
+    secure: X/r8fc/kl0sG0u5/MaX90M8aDcjYNELBQA3V4ePH5nYH88Vp0+DrALJxiaskcMzScq1sxCz77e+eldfNfIwoMwqOg5EZ9qqoauz1XBEUAV149Oy5SIsDfcJ4LO6FxJcWZyJiowVooGspX32BQTa6sTUAYDs9Q9uryDqdBn3KztR2lSB6ff1rsS9EeeufjnDt2/SV2KeznOCpgxU0nkRCWGCUsb4FMNrWSW8fByKUcFeN8dA8lt/U1RmHixIWrhSPuNXHZ2S5hoNqZgsMfvC3hvtPBw/OZBHwKoVUWwXT/nTmx60OvNxqVVVQDO/ih/NwoZoMnWO/P1peGvrlpPALfLDbRECiihUV4H5z5L3cnKhDxEZH5zsIJj+J8rhfo2GJd0RRwUsxmrUIugkXhwiyTlhY7zvz9eChBhh95AEiBz1BHKs3X8WxvdHadEHzS/H9lcgoT/3BSMLp0eru2+aSykjz3Q0rp89aN8pqGT9En25d5H7MtRGEEjb0uOQebB6QJojzwyWSbF5+l6fIvgVJZDxFoLbCRRloXRHiidZ+j1AJid+chFje/Q4ueCCHhf5Ce6lsprC4NSHyHdjHKAdpM5wVXClnGJhN73ezNdWf0jYk7ZEbY8MnLgv0Od3GK9mjKaqlj2HyEFnNIRwkmhDyDaHrkIDgSZkpSw8L5f1c7k0=
+  email: false
+cache:
+  directories:
+    - node_modules
+script:
+- npm run deploy
