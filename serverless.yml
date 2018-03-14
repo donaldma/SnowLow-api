@@ -27,6 +27,7 @@ provider:
     ADMIN_COG_ID: "${self:custom.secrets.ADMIN_COG_ID}"
     TWILIO_SID: "${self:custom.secrets.TWILIO_SID}"
     TWILIO_TOKEN: "${self:custom.secrets.TWILIO_TOKEN}"
+    AUTH_TOKEN: "${self:custom.secrets.AUTH_TOKEN}"
   iamRoleStatements:
   - Effect: Allow
     Action:
