@@ -12,4 +12,4 @@ script:
 - npm install
 - npm run lint
 - npm run build
-- sls deploy -s prod
+- serverless deploy -s prod
