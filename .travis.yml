@@ -9,4 +9,7 @@ cache:
     - node_modules
 script:
 - npm install -g serverless
-- npm run deploy
+- npm install
+- npm run lint
+- npm run build
+- sls deploy -s prod
