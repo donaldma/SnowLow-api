@@ -54,7 +54,7 @@ export default {
 
         numbersToNotify.forEach(num => {
           client.messages.create({
-              body: `Your pcpartpicker build ${url} is ${totalPrice} today.`,
+              body: `Price on ${currentMoment}: ${totalPrice[0]}`,
               to: num,
               from: '7784000527'
           })
