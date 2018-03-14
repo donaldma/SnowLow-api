@@ -10,4 +10,4 @@ script:
   - npm install -g serverless
   - npm run lint
   - npm run build
-  - serverless deploy -s prod
+  - sls deploy -s prod
