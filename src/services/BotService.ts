@@ -9,15 +9,16 @@ const client = new twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN)
 export default {
 
   checkTickets: async function(pathParams: any, callback: any) {
-    const url = `https://www.cineplex.com/Movie/${pathParams.movieTitle}`
-
+    const date = pathParams.date.split('-').join('/')
+    const url = `https://www.cineplex.com/Showtimes/${pathParams.movieTitle}/${pathParams.location}?Date=${date}`
+    console.log('1',url)
     await request(url, (error, response, html) => {
       if (!error) {
         const $ = cheerio.load(html)
-        const ticketText = $('div.md-qt-widget-container').children().children().text()
+        const ticketText = $('div#showtimes-partial-update').last().text()
         const numbersToNotify = ['7788653098', '7789529922']
 
-        if(ticketText === 'Tickets for this movie are not available at this moment') {
+        if(ticketText.replace(/\s/g, '') === 'ThemovieAvengers:InfinityWarisnotplayingatthelocationSilverCityRiverportCinemason4/26/2018') {
           console.log('not available')
           return
         }
