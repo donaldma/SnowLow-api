@@ -11,7 +11,6 @@ export default {
   checkTickets: async function(pathParams: any, callback: any) {
     const date = pathParams.date.split('-').join('/')
     const url = `https://www.cineplex.com/Showtimes/${pathParams.movieTitle}/${pathParams.location}?Date=${date}`
-    console.log('1',url)
     await request(url, (error, response, html) => {
       if (!error) {
         const $ = cheerio.load(html)
