@@ -16,7 +16,6 @@ export default {
         const $ = cheerio.load(html)
         const ticketText = $('div#showtimes-partial-update').last().text()
         const numbersToNotify = ['7788653098', '7789529922']
-
         if(ticketText.replace(/\s/g, '') === 'ThemovieAvengers:InfinityWarisnotplayingatthelocationSilverCityRiverportCinemason4/26/2018') {
           console.log('not available')
           return
