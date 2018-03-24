@@ -12,7 +12,7 @@ plugins:
 custom:
   dynamodb:
     start:
-      port: 3001
+      port: 8000
       inMemory: true
       migrate: true
       # noStart: true
@@ -24,10 +24,12 @@ provider:
   environment:
     USER_TABLE: ${self:service}-user
     SEARCH_HISTORY_TABLE: ${self:service}-searchHistory
+    PC_PRICE_TABLE: ${self:service}-pcPrice
     ADMIN_COG_ID: "${self:custom.secrets.ADMIN_COG_ID}"
     TWILIO_SID: "${self:custom.secrets.TWILIO_SID}"
     TWILIO_TOKEN: "${self:custom.secrets.TWILIO_TOKEN}"
     AUTH_TOKEN: "${self:custom.secrets.AUTH_TOKEN}"
+    PHONE_NUMBER: "${self:custom.secrets.PHONE_NUMBER}"
   iamRoleStatements:
   - Effect: Allow
     Action:
@@ -40,6 +42,7 @@ provider:
     Resource:
       - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.USER_TABLE}"
       - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.SEARCH_HISTORY_TABLE}"
+      - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.PC_PRICE_TABLE}"
 
 functions:
 
@@ -119,3 +122,19 @@ resources:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
         TableName: ${self:provider.environment.SEARCH_HISTORY_TABLE}
+    pcPriceDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: ${self:provider.environment.PC_PRICE_TABLE}
