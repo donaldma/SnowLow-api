@@ -2,7 +2,7 @@ import SearchRepository from '../repositories/SearchRepository'
 import * as moment from 'moment'
 import { success, failure } from '../aws/DynamodbResponse'
 import EvoHelper from '../utilities/ScrapeHelpers.ts/EvoHelper'
-import { IDatabaseResults } from '../models/Search'
+import { IDatabaseResults, IScrapeResults } from '../models/Search'
 import CommonRepository from '../repositories/CommonRepository'
 
 
@@ -12,7 +12,7 @@ export default {
     const genderPath = event.queryStringParameters && 'gender' in event.queryStringParameters ? `/${event.queryStringParameters.gender}` : ''
 
     const resultsFromDb: IDatabaseResults[] = []
-    const resultsFromScrape = [] as object[]
+    const resultsFromScrape = [] as IScrapeResults[]
 
     /**
      * If search term is already in database, and createdAt is not more than 1 days
