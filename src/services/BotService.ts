@@ -60,6 +60,7 @@ export default {
         await BotRepository.addPcPrice(totalPrice[0], table, event, callback)
 
         if(lastCheckedPrice && lastCheckedPrice.price === totalPrice[0]) {
+          console.log('No price change')
           return
         }
 
