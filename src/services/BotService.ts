@@ -1,5 +1,7 @@
 import * as moment from 'moment-timezone'
 import { success, failure } from '../aws/DynamodbResponse'
+import BotRepository from '../repositories/BotRepository'
+import CommonRepository from '../repositories/CommonRepository'
 const cheerio = require('cheerio')
 const request = require('request-promise')
 
@@ -10,8 +12,8 @@ export default {
 
   checkTickets: async function(pathParams: any, callback: any) {
     const date = pathParams.date.split('-').join('/')
+    const movieName = pathParams.movieTitle.split('-').join(' ')
     const url = `https://www.cineplex.com/Showtimes/${pathParams.movieTitle}/${pathParams.location}?Date=${date}`
-
     await request(url, (error, response, html) => {
       if (!error) {
         const $ = cheerio.load(html)
@@ -22,10 +24,10 @@ export default {
           return
         }
 
-        numbersToNotify.forEach(num => {
+        numbersToNotify.forEach(x => {
           client.messages.create({
-              body: `Tickets for infinity war now available at https://www.cineplex.com/Movie/${pathParams.movieTitle}`,
-              to: num,
+              body: `Movie tickets for ${movieName} now available`,
+              to: x,
               from: '7784000527'
           })
         })
@@ -37,10 +39,16 @@ export default {
     callback(null, success({ status: true }))
   },
 
-  checkPrice: async function(pathParams: any, callback: any) {
+  checkPrice: async function(pathParams: any, event: any, callback: any, table: string) {
     const url = `https://ca.pcpartpicker.com/list/${pathParams.listId}`
+    const currentMoment = moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
+    const allPrices = await CommonRepository.findAll(table, event, callback, true)
+    const sortedPrices = allPrices.sort((a,b) => {
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    })
+    const lastCheckedPrice = sortedPrices[sortedPrices.length - 1]
 
-    await request(url, (error, response, html) => {
+    await request(url, async (error, response, html) => {
       if (!error) {
         const $ = cheerio.load(html)
         const totalPrice: string[] = []
@@ -49,8 +57,14 @@ export default {
           const data = $(element)
           totalPrice.push(data.children().text().substring(6))
         })
-        const numbersToNotify = ['7788653098']
-        const currentMoment = moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
+        await BotRepository.addPcPrice(totalPrice[0], table, event, callback)
+
+        if(lastCheckedPrice && lastCheckedPrice.price === totalPrice[0]) {
+          console.log('No price change')
+          return
+        }
+
+        const numbersToNotify = [process.env.PHONE_NUMBER]
 
         numbersToNotify.forEach(num => {
           client.messages.create({

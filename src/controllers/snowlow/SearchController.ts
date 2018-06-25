@@ -1,8 +1,8 @@
 'use strict'
 
 import SearchService from '../../services/SearchService'
-import SearchRepository from '../../repositories/SearchRepository'
 import { NotAuthorized } from '../../aws/DynamodbResponse'
+import CommonRepository from '../../repositories/CommonRepository'
 
 /**
  * Search based on search term
@@ -24,7 +24,7 @@ module.exports.clearData = async (event, context, callback) => {
     }
   }
 
-  await SearchRepository.clearData(process.env.SEARCH_HISTORY_TABLE!, event, callback)
+  await CommonRepository.clearData(process.env.SEARCH_HISTORY_TABLE!, event, callback)
 }
 
 /**
@@ -40,5 +40,5 @@ module.exports.getAll = async (event: any, context, callback) => {
     }
   }
 
-  await SearchRepository.findAll(process.env.SEARCH_HISTORY_TABLE!, event, callback, false)
+  await CommonRepository.findAll(process.env.SEARCH_HISTORY_TABLE!, event, callback, false)
 }

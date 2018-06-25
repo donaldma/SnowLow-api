@@ -18,5 +18,5 @@ module.exports.pcPriceBot = async (event, context, callback) => {
     return
   }
 
-  await BotService.checkPrice(event.pathParameters, callback)
+  await BotService.checkPrice(event.pathParameters, event, callback, process.env.PC_PRICE_TABLE!)
 }
