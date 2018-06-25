@@ -8,9 +8,6 @@ import CommonRepository from '../../repositories/CommonRepository'
  * Search based on search term
  */
 module.exports.search = async (event, context, callback) => {
-  console.log('process.env.TEST_VAR', process.env.TEST_VAR)
-  console.log('process.env', process.env)
-  console.log('process.env.TRAVIS_SECURE_ENV_VARS', process.env.TRAVIS_SECURE_ENV_VARS)
   await SearchService.scrapeBySearchTerm(event.pathParameters, process.env.SEARCH_HISTORY_TABLE!, event, callback)
 }
 
