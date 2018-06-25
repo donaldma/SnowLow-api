@@ -8,6 +8,7 @@ import CommonRepository from '../../repositories/CommonRepository'
  * Search based on search term
  */
 module.exports.search = async (event, context, callback) => {
+  console.log(process.env.TEST_VAR)
   await SearchService.scrapeBySearchTerm(event.pathParameters, process.env.SEARCH_HISTORY_TABLE!, event, callback)
 }
 
