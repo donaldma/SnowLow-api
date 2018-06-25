@@ -44,7 +44,7 @@ provider:
 functions:
 
   search:
-    handler: build/controllers/SearchController.search
+    handler: build/controllers/snowlow/SearchController.search
     events:
       - http:
           path: search/{searchTerm}
@@ -52,7 +52,7 @@ functions:
           cors: true
 
   movieBot:
-    handler: build/controllers/BotController.movieBot
+    handler: build/controllers/bot/BotController.movieBot
     events:
       - http:
           path: bot/movie/{movieTitle}/{location}/{date}
@@ -60,7 +60,7 @@ functions:
           cors: true
 
   pcPriceBot:
-    handler: build/controllers/BotController.pcPriceBot
+    handler: build/controllers/bot/BotController.pcPriceBot
     events:
       - http:
           path: bot/pcparts/{listId}
@@ -68,7 +68,7 @@ functions:
           cors: true
 
   getAll:
-    handler: /build/controllers/SearchController.getAll
+    handler: /build/controllers/snowlow/SearchController.getAll
     events:
       - http:
           path: search/admin/history
@@ -77,7 +77,7 @@ functions:
           authorizer: aws_iam
 
   deleteAll:
-    handler: build/controllers/SearchController.clearData
+    handler: build/controllers/snowlow/SearchController.clearData
     events:
       - http:
           path: search/admin/history

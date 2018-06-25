@@ -1,8 +1,8 @@
 'use strict'
 
-import SearchService from '../services/SearchService'
-import SearchRepository from '../repositories/SearchRepository'
-import { NotAuthorized } from '../aws/DynamodbResponse'
+import SearchService from '../../services/SearchService'
+import SearchRepository from '../../repositories/SearchRepository'
+import { NotAuthorized } from '../../aws/DynamodbResponse'
 
 /**
  * Search based on search term
